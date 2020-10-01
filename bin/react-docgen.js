@@ -31,7 +31,7 @@ argv
     'File extensions to consider. Repeat to define multiple extensions. Default: ' +
       JSON.stringify(defaultExtensions),
     collect,
-    ['js', 'jsx']
+    []
   )
   .option(
     '-e, --exclude <path>',
@@ -63,7 +63,9 @@ const path = require('path');
 
 const output = argv.out;
 const paths = argv.args || [];
-const extensions = new RegExp('\\.(?:' + argv.extension.join('|') + ')$');
+
+const extension = argv.extension.length ? argv.extension : defaultExtensions;
+const extensions = new RegExp('\\.(?:' + extension.join('|') + ')$');
 const ignoreDir = argv.ignore;
 let excludePatterns = argv.exclude;
 let resolver;
