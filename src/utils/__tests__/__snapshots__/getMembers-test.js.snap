@@ -53,6 +53,7 @@ Array [
           "start": 1,
           "type": "Identifier",
         },
+        "optional": false,
         "property": Node {
           "end": 8,
           "loc": SourceLocation {
@@ -84,6 +85,7 @@ Array [
           "line": 1,
         },
       },
+      "optional": false,
       "start": 1,
       "type": "CallExpression",
     },
