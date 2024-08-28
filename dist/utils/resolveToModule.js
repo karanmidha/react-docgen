@@ -1,18 +1,13 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = resolveToModule;
-
 var _astTypes = require("ast-types");
-
 var _match = _interopRequireDefault(require("./match"));
-
 var _resolveToValue = _interopRequireDefault(require("./resolveToValue"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -29,15 +24,12 @@ var _resolveToValue = _interopRequireDefault(require("./resolveToValue"));
  */
 function resolveToModule(path) {
   const node = path.node;
-
   switch (node.type) {
     case _astTypes.namedTypes.VariableDeclarator.name:
       if (node.init) {
         return resolveToModule(path.get('init'));
       }
-
       break;
-
     case _astTypes.namedTypes.CallExpression.name:
       if ((0, _match.default)(node.callee, {
         type: _astTypes.namedTypes.Identifier.name,
@@ -45,34 +37,25 @@ function resolveToModule(path) {
       })) {
         return node.arguments[0].value;
       }
-
       return resolveToModule(path.get('callee'));
-
     case _astTypes.namedTypes.Identifier.name:
     case _astTypes.namedTypes.JSXIdentifier.name:
       {
         const valuePath = (0, _resolveToValue.default)(path);
-
         if (valuePath !== path) {
           return resolveToModule(valuePath);
         }
-
         break;
       }
-
     case _astTypes.namedTypes.ImportDeclaration.name:
       return node.source.value;
-
     case _astTypes.namedTypes.MemberExpression.name:
       while (path && _astTypes.namedTypes.MemberExpression.check(path.node)) {
         path = path.get('object');
       }
-
       if (path) {
         return resolveToModule(path);
       }
-
   }
-
   return null;
 }

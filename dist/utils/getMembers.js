@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = getMembers;
-
 var _astTypes = require("ast-types");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -30,8 +28,8 @@ var _astTypes = require("ast-types");
  */
 function getMembers(path, includeRoot = false) {
   const result = [];
-  let argumentsPath = null; // eslint-disable-next-line no-constant-condition
-
+  let argumentsPath = null;
+  // eslint-disable-next-line no-constant-condition
   loop: while (true) {
     switch (true) {
       case _astTypes.namedTypes.MemberExpression.check(path.node):
@@ -43,17 +41,14 @@ function getMembers(path, includeRoot = false) {
         argumentsPath = null;
         path = path.get('object');
         break;
-
       case _astTypes.namedTypes.CallExpression.check(path.node):
         argumentsPath = path.get('arguments');
         path = path.get('callee');
         break;
-
       default:
         break loop;
     }
   }
-
   if (includeRoot && result.length > 0) {
     result.push({
       path,
@@ -61,6 +56,5 @@ function getMembers(path, includeRoot = false) {
       argumentsPath
     });
   }
-
   return result.reverse();
 }

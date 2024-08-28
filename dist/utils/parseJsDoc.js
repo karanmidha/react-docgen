@@ -1,14 +1,11 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = parseJsDoc;
-
 var _doctrine = _interopRequireDefault(require("doctrine"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -17,11 +14,11 @@ var _doctrine = _interopRequireDefault(require("doctrine"));
  *
  * 
  */
+
 function getType(tagType) {
   if (!tagType) {
     return null;
   }
-
   const {
     type,
     name,
@@ -29,45 +26,38 @@ function getType(tagType) {
     elements,
     applications
   } = tagType;
-
   switch (type) {
     case 'NameExpression':
       // {a}
       return {
         name
       };
-
     case 'UnionType':
       // {a|b}
       return {
         name: 'union',
         elements: elements.map(element => getType(element))
       };
-
     case 'AllLiteral':
       // {*}
       return {
         name: 'mixed'
       };
-
     case 'TypeApplication':
       // {Array<string>} or {string[]}
       return {
         name: expression.name,
         elements: applications.map(element => getType(element))
       };
-
     case 'ArrayType':
       // {[number, string]}
       return {
         name: 'tuple',
         elements: elements.map(element => getType(element))
       };
-
     default:
       {
         const typeName = name ? name : expression ? expression.name : null;
-
         if (typeName) {
           return {
             name: typeName
@@ -78,31 +68,27 @@ function getType(tagType) {
       }
   }
 }
-
 function getOptional(tag) {
   return !!(tag.type && tag.type.type && tag.type.type === 'OptionalType');
-} // Add jsdoc @return description.
+}
 
-
+// Add jsdoc @return description.
 function getReturnsJsDoc(jsDoc) {
   const returnTag = jsDoc.tags.find(tag => tag.title === 'return' || tag.title === 'returns');
-
   if (returnTag) {
     return {
       description: returnTag.description,
       type: getType(returnTag.type)
     };
   }
-
   return null;
-} // Add jsdoc @param descriptions.
+}
 
-
+// Add jsdoc @param descriptions.
 function getParamsJsDoc(jsDoc) {
   if (!jsDoc.tags) {
     return [];
   }
-
   return jsDoc.tags.filter(tag => tag.title === 'param').map(tag => {
     return {
       name: tag.name,
@@ -112,10 +98,8 @@ function getParamsJsDoc(jsDoc) {
     };
   });
 }
-
 function parseJsDoc(docblock) {
   const jsDoc = _doctrine.default.parse(docblock);
-
   return {
     description: jsDoc.description || null,
     params: getParamsJsDoc(jsDoc),

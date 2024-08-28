@@ -1,17 +1,13 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.String = toString;
 exports.Array = toArray;
-
+exports.String = toString;
 var _astTypes = require("ast-types");
-
 var _resolveToValue = _interopRequireDefault(require("./resolveToValue"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -30,20 +26,16 @@ var _resolveToValue = _interopRequireDefault(require("./resolveToValue"));
 function toArray(path) {
   const parts = [path];
   let result = [];
-
   while (parts.length > 0) {
     path = parts.shift();
     const node = path.node;
-
     if (_astTypes.namedTypes.CallExpression.check(node)) {
       parts.push(path.get('callee'));
       continue;
     } else if (_astTypes.namedTypes.MemberExpression.check(node)) {
       parts.push(path.get('object'));
-
       if (node.computed) {
         const resolvedPath = (0, _resolveToValue.default)(path.get('property'));
-
         if (resolvedPath !== undefined) {
           result = result.concat(toArray(resolvedPath));
         } else {
@@ -52,7 +44,6 @@ function toArray(path) {
       } else {
         result.push(node.property.name);
       }
-
       continue;
     } else if (_astTypes.namedTypes.Identifier.check(node)) {
       result.push(node.name);
@@ -74,14 +65,12 @@ function toArray(path) {
       continue;
     }
   }
-
   return result.reverse();
 }
+
 /**
  * Creates a string representation of a member expression.
  */
-
-
 function toString(path) {
   return toArray(path).join('.');
 }

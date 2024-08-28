@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = getMemberExpressionRoot;
-
 var _astTypes = require("ast-types");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -28,6 +26,5 @@ function getMemberExpressionRoot(memberExpressionPath) {
   do {
     memberExpressionPath = memberExpressionPath.get('object');
   } while (_astTypes.namedTypes.MemberExpression.check(memberExpressionPath.node));
-
   return memberExpressionPath;
 }

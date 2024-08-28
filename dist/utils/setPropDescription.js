@@ -1,16 +1,12 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _getPropertyName = _interopRequireDefault(require("./getPropertyName"));
-
 var _docblock = require("./docblock");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -26,5 +22,4 @@ var _default = (documentation, propertyPath) => {
   if (propDescriptor.description) return;
   propDescriptor.description = (0, _docblock.getDocblock)(propertyPath) || '';
 };
-
 exports.default = _default;

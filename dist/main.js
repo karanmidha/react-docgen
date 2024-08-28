@@ -1,29 +1,21 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.handlers = exports.defaultHandlers = void 0;
 exports.parse = defaultParse;
-exports.utils = exports.resolver = exports.handlers = exports.defaultHandlers = void 0;
-
+exports.utils = exports.resolver = void 0;
 var allHandlers = _interopRequireWildcard(require("./handlers"));
-
 exports.handlers = allHandlers;
-
 var _parse = _interopRequireDefault(require("./parse"));
-
 var AllResolver = _interopRequireWildcard(require("./resolver"));
-
 exports.resolver = AllResolver;
-
 var utils = _interopRequireWildcard(require("./utils"));
-
 exports.utils = utils;
-
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -32,8 +24,10 @@ exports.utils = utils;
  *
  * 
  */
+
 const defaultResolver = AllResolver.findExportedComponentDefinition;
-const defaultHandlers = [allHandlers.propTypeHandler, allHandlers.contextTypeHandler, allHandlers.childContextTypeHandler, allHandlers.propTypeCompositionHandler, allHandlers.propDocBlockHandler, allHandlers.flowTypeHandler, allHandlers.defaultPropsHandler, allHandlers.componentDocblockHandler, allHandlers.displayNameHandler, allHandlers.componentMethodsHandler, allHandlers.componentMethodsJsDocHandler];
+const defaultHandlers = exports.defaultHandlers = [allHandlers.propTypeHandler, allHandlers.contextTypeHandler, allHandlers.childContextTypeHandler, allHandlers.propTypeCompositionHandler, allHandlers.propDocBlockHandler, allHandlers.flowTypeHandler, allHandlers.defaultPropsHandler, allHandlers.componentDocblockHandler, allHandlers.displayNameHandler, allHandlers.componentMethodsHandler, allHandlers.componentMethodsJsDocHandler];
+
 /**
  * See `lib/parse.js` for more information about the arguments. This function
  * simply sets default values for convenience.
@@ -46,17 +40,12 @@ const defaultHandlers = [allHandlers.propTypeHandler, allHandlers.contextTypeHan
  * documentation (from docblocks), default prop values and component
  * documentation (from a docblock).
  */
-
-exports.defaultHandlers = defaultHandlers;
-
 function defaultParse(src, resolver, handlers, options = {}) {
   if (!resolver) {
     resolver = defaultResolver;
   }
-
   if (!handlers) {
     handlers = defaultHandlers;
   }
-
   return (0, _parse.default)(String(src), resolver, handlers, options);
 }

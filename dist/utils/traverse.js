@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.traverseShallow = traverseShallow;
-
 var _astTypes = require("ast-types");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -21,13 +19,12 @@ var _astTypes = require("ast-types");
  * default.
  */
 function traverseShallow(path, visitors) {
-  (0, _astTypes.visit)(path, { ...defaultVisitors,
+  (0, _astTypes.visit)(path, {
+    ...defaultVisitors,
     ...visitors
   });
 }
-
 const ignore = () => false;
-
 const defaultVisitors = {
   visitFunctionDeclaration: ignore,
   visitFunctionExpression: ignore,

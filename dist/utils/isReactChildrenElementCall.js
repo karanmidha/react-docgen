@@ -1,20 +1,14 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = isReactChildrenElementCall;
-
 var _astTypes = require("ast-types");
-
 var _isReactModuleName = _interopRequireDefault(require("./isReactModuleName"));
-
 var _match = _interopRequireDefault(require("./match"));
-
 var _resolveToModule = _interopRequireDefault(require("./resolveToModule"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -32,7 +26,6 @@ function isReactChildrenElementCall(path) {
   if (_astTypes.namedTypes.ExpressionStatement.check(path.node)) {
     path = path.get('expression');
   }
-
   if (!(0, _match.default)(path.node, {
     callee: {
       property: {
@@ -42,10 +35,8 @@ function isReactChildrenElementCall(path) {
   })) {
     return false;
   }
-
   const calleeObj = path.get('callee', 'object');
   const module = (0, _resolveToModule.default)(calleeObj);
-
   if (!(0, _match.default)(calleeObj, {
     value: {
       property: {
@@ -55,6 +46,5 @@ function isReactChildrenElementCall(path) {
   })) {
     return false;
   }
-
   return Boolean(module && (0, _isReactModuleName.default)(module));
 }

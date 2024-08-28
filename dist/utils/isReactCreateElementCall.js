@@ -1,14 +1,11 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = isReactCreateElementCall;
-
 var _isReactBuiltinCall = _interopRequireDefault(require("./isReactBuiltinCall"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

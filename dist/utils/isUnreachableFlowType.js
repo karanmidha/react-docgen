@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 var _astTypes = require("ast-types");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -15,12 +13,10 @@ var _astTypes = require("ast-types");
  *
  * 
  */
-
 /**
  * Returns true of the path is an unreachable TypePath
  */
 var _default = path => {
   return !path || _astTypes.namedTypes.Identifier.check(path.node) || _astTypes.namedTypes.ImportDeclaration.check(path.node) || _astTypes.namedTypes.CallExpression.check(path.node);
 };
-
 exports.default = _default;

@@ -1,14 +1,11 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = isRequiredPropType;
-
 var _getMembers = _interopRequireDefault(require("../utils/getMembers"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = match;
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -23,12 +22,10 @@ function match(node, pattern) {
   if (!node) {
     return false;
   }
-
   for (const prop in pattern) {
     if (!node[prop]) {
       return false;
     }
-
     if (pattern[prop] && typeof pattern[prop] === 'object') {
       if (!match(node[prop], pattern[prop])) {
         return false;
@@ -37,6 +34,5 @@ function match(node, pattern) {
       return false;
     }
   }
-
   return true;
 }

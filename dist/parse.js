@@ -1,19 +1,14 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = parse;
 exports.ERROR_MISSING_DEFINITION = void 0;
-
+exports.default = parse;
 var _Documentation = _interopRequireDefault(require("./Documentation"));
-
 var _postProcessDocumentation = _interopRequireDefault(require("./utils/postProcessDocumentation"));
-
 var _babelParser = _interopRequireDefault(require("./babelParser"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -22,9 +17,8 @@ var _babelParser = _interopRequireDefault(require("./babelParser"));
  *
  * 
  */
-const ERROR_MISSING_DEFINITION = 'No suitable component definition found.';
-exports.ERROR_MISSING_DEFINITION = ERROR_MISSING_DEFINITION;
 
+const ERROR_MISSING_DEFINITION = exports.ERROR_MISSING_DEFINITION = 'No suitable component definition found.';
 function executeHandlers(handlers, componentDefinitions, parser) {
   return componentDefinitions.map(componentDefinition => {
     const documentation = new _Documentation.default();
@@ -32,6 +26,7 @@ function executeHandlers(handlers, componentDefinitions, parser) {
     return (0, _postProcessDocumentation.default)(documentation.toObject());
   });
 }
+
 /**
  * Takes JavaScript source code and returns an object with the information
  * extract from it.
@@ -53,23 +48,18 @@ function executeHandlers(handlers, componentDefinitions, parser) {
  * an array of documentation objects. If `resolver` returns a single node
  * instead, `parse` will return a documentation object.
  */
-
-
 function parse(src, resolver, handlers, options) {
   const parser = (0, _babelParser.default)(options);
   const ast = parser.parse(src);
   ast.__src = src;
   const componentDefinitions = resolver(ast, parser);
-
   if (Array.isArray(componentDefinitions)) {
     if (componentDefinitions.length === 0) {
       throw new Error(ERROR_MISSING_DEFINITION);
     }
-
     return executeHandlers(handlers, componentDefinitions, parser);
   } else if (componentDefinitions) {
     return executeHandlers(handlers, [componentDefinitions], parser)[0];
   }
-
   throw new Error(ERROR_MISSING_DEFINITION);
 }

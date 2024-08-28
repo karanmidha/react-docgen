@@ -1,18 +1,13 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = normalizeClassDefinition;
-
 var _astTypes = require("ast-types");
-
 var _getMemberExpressionRoot = _interopRequireDefault(require("../utils/getMemberExpressionRoot"));
-
 var _getMembers = _interopRequireDefault(require("../utils/getMembers"));
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -21,7 +16,9 @@ var _getMembers = _interopRequireDefault(require("../utils/getMembers"));
  *
  * 
  */
+
 const ignore = () => false;
+
 /**
  * Given a class definition (i.e. `class` declaration or expression), this
  * function "normalizes" the definition, by looking for assignments of static
@@ -41,11 +38,8 @@ const ignore = () => false;
  *   static propTypes = { ... };
  * }
  */
-
-
 function normalizeClassDefinition(classDefinition) {
   let variableName;
-
   if (_astTypes.namedTypes.ClassDeclaration.check(classDefinition.node)) {
     // Class declarations don't have an id, e.g.: `export default class extends React.Component {}`
     if (classDefinition.node.id) {
@@ -55,7 +49,6 @@ function normalizeClassDefinition(classDefinition) {
     let {
       parentPath
     } = classDefinition;
-
     while (parentPath.node !== classDefinition.scope.node && !_astTypes.namedTypes.BlockStatement.check(parentPath.node)) {
       if (_astTypes.namedTypes.VariableDeclarator.check(parentPath.node) && _astTypes.namedTypes.Identifier.check(parentPath.node.id)) {
         variableName = parentPath.node.id.name;
@@ -64,15 +57,12 @@ function normalizeClassDefinition(classDefinition) {
         variableName = parentPath.node.left.name;
         break;
       }
-
       parentPath = parentPath.parentPath;
     }
   }
-
   if (!variableName) {
     return;
   }
-
   const scopeRoot = classDefinition.scope;
   (0, _astTypes.visit)(scopeRoot.node, {
     visitFunction: ignore,
@@ -83,18 +73,14 @@ function normalizeClassDefinition(classDefinition) {
     visitAssignmentExpression: function (path) {
       if (_astTypes.namedTypes.MemberExpression.check(path.node.left)) {
         const first = (0, _getMemberExpressionRoot.default)(path.get('left'));
-
         if (_astTypes.namedTypes.Identifier.check(first.node) && first.node.name === variableName) {
           const [member] = (0, _getMembers.default)(path.get('left'));
-
           if (member && !member.path.node.computed) {
             const classProperty = _astTypes.builders.classProperty(member.path.node, path.node.right, null, true);
-
             classDefinition.get('body', 'body').value.push(classProperty);
             return false;
           }
         }
-
         this.traverse(path);
       } else {
         return false;

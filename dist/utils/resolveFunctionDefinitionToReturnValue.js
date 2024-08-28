@@ -1,16 +1,12 @@
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = resolveFunctionDefinitionToReturnValue;
-
 var _resolveToValue = _interopRequireDefault(require("./resolveToValue"));
-
 var _traverse = require("./traverse");
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -19,6 +15,7 @@ var _traverse = require("./traverse");
  *
  * 
  */
+
 function resolveFunctionDefinitionToReturnValue(path) {
   let returnPath = null;
   (0, _traverse.traverseShallow)(path.get('body'), {
