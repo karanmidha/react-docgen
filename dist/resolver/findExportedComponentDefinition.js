@@ -66,14 +66,7 @@ function findExportedComponentDefinition(ast) {
   let foundDefinition;
   function exportDeclaration(path) {
     const definitions = (0, _resolveExportDeclaration.default)(path).reduce((acc, definition) => {
-      if (isComponentDefinition(definition)) {
-        acc.push(definition);
-      } else {
-        const resolved = (0, _resolveToValue.default)((0, _resolveHOC.default)(definition));
-        if (isComponentDefinition(resolved)) {
-          acc.push(resolved);
-        }
-      }
+      acc.push(definition);
       return acc;
     }, []);
     if (definitions.length === 0) {
@@ -83,7 +76,7 @@ function findExportedComponentDefinition(ast) {
       // If a file exports multiple components, ... complain!
       throw new Error(ERROR_MULTIPLE_DEFINITIONS);
     }
-    foundDefinition = resolveDefinition(definitions[0]);
+    foundDefinition = definitions[0];
     return false;
   }
   (0, _astTypes.visit)(ast, {
