@@ -76,14 +76,8 @@ export default function findExportedComponentDefinition(
   function exportDeclaration(path) {
     const definitions = resolveExportDeclaration(path).reduce(
       (acc, definition) => {
-        if (isComponentDefinition(definition)) {
-          acc.push(definition);
-        } else {
-          const resolved = resolveToValue(resolveHOC(definition));
-          if (isComponentDefinition(resolved)) {
-            acc.push(resolved);
-          }
-        }
+        acc.push(definition);
+
         return acc;
       },
       [],
@@ -96,7 +90,7 @@ export default function findExportedComponentDefinition(
       // If a file exports multiple components, ... complain!
       throw new Error(ERROR_MULTIPLE_DEFINITIONS);
     }
-    foundDefinition = resolveDefinition(definitions[0]);
+    foundDefinition = definitions[0];
     return false;
   }
 
